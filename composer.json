@@ -1,0 +1,23 @@
+{
+    "name": "eva/common",
+    "description": "Common",
+    "keywords": [],
+    "homepage": "https://github.com/thewarmthofyourhands",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "thewarmthofyourhands"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "files": [
+            "src/functions/json.php"
+        ],
+        "psr-4": {
+            "Eva\\Common\\": "src/"
+        }
+    }
+}
