@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Eva\Common;
 
 use ReflectionClass;
+use ReflectionException;
 
 class NestedDto
 {
+    /**
+     * @throws ReflectionException
+     */
     public function __construct(CollectionInterface|array $data)
     {
         $ref = new ReflectionClass($this);
@@ -23,17 +27,20 @@ class NestedDto
         }
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function toArray(): array
     {
         $ref = new ReflectionClass($this);
-        $vars = get_object_vars($this);
+        $variables = get_object_vars($this);
 
-        foreach ($vars as $property => $var) {
-            if (is_object($var) && is_subclass_of($ref->getProperty($property)->getType()->getName(), NestedDto::class)) {
-                $vars[$property] = $var->toArray();
+        foreach ($variables as $property => $variable) {
+            if (is_object($variable) && is_subclass_of($ref->getProperty($property)->getType()?->getName(), __CLASS__)) {
+                $variables[$property] = $variable->toArray();
             }
         }
 
-        return $vars;
+        return $variables;
     }
 }

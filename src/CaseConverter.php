@@ -14,7 +14,6 @@ class CaseConverter
     public static function toPascaleCase(string $string): string
     {
         return str_replace(['_', '-'], '', ucwords($string, '_-'));
-
     }
 
     public static function toSnakeCase($input): string

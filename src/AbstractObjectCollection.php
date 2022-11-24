@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace Eva\Common;
 
-use Exception;
+use RuntimeException;
 
 abstract class AbstractObjectCollection extends Collection
 {
-//    public function __construct(private readonly string $objectClass, array $collection)
-//    {
-//        parent::__construct($collection);
-//    }
-
     /**
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function add(mixed $item, int|string|null $key = null): static
     {
@@ -24,7 +19,7 @@ abstract class AbstractObjectCollection extends Collection
     }
 
     /**
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function addAll(array $items): static
     {
@@ -36,14 +31,14 @@ abstract class AbstractObjectCollection extends Collection
     }
 
     /**
-     * @throws Exception
+     * @throws RuntimeException
      */
     private function validCorrectType(mixed $item): void
     {
         $className = $this->getClassName();
 
-        if (!$item instanceof $className) {
-            throw new Exception('Wrong type of item for object collection');
+        if (false === $item instanceof $className) {
+            throw new RuntimeException('Wrong type of item for object collection');
         }
     }
 

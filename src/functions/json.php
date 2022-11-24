@@ -9,7 +9,7 @@ use JsonException;
 /**
  * @throws JsonException
  */
-function json_encode(mixed $value, int $flags = 0, int $depth = 512): string|false
+function json_encode(mixed $value, int $flags = 0, int $depth = 512): string
 {
     $res = \json_encode($value, $flags|JSON_THROW_ON_ERROR, $depth);
 

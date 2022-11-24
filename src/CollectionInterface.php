@@ -14,9 +14,9 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, Iterator, C
     public function add(mixed $item, null|int|string $key): static;
     public function addAll(array $items): static;
 
-    public function get(Callable|int|string $key): mixed;
+    public function get(Callable|int|string $criterion): mixed;
     public function queryOne(Callable $fn): mixed;
-    public function query(Callable $fn): null|static;
+    public function query(Callable $fn): static;
     public function map(Callable $fn): static;
 
     public function filter(Callable $fn, null|int $mode = null): static;
@@ -25,7 +25,7 @@ interface CollectionInterface extends ArrayAccess, JsonSerializable, Iterator, C
 
     public function values(): array;
     public function isEmpty(): bool;
-    public function unset(mixed $key): void;
+    public function unset(string|int $key): void;
     public function clear(): void;
 
     public function end(): void;

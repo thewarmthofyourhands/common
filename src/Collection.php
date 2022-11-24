@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Eva\Common;
 
-//@TODO ArrayObject
+use JsonException;
+
+use function Eva\Common\Functions\json_encode;
+
 class Collection implements CollectionInterface
 {
     protected array $collection = [];
@@ -28,10 +31,10 @@ class Collection implements CollectionInterface
         return $this;
     }
 
-    public function get(Callable|int|string $key): mixed
+    public function get(Callable|int|string $criterion): mixed
     {
-        if (is_callable($key)) {
-            foreach ($this->collection as $key => $item) {
+        if (is_callable($criterion)) {
+            foreach($this->collection as $key => $item) {
                 $found = $key($item, $key, $this->collection);
                 if ($found === true) {
                     return $item;
@@ -41,7 +44,7 @@ class Collection implements CollectionInterface
             return null;
         }
 
-        return $this->collection[$key];
+        return $this->collection[$criterion];
     }
 
     public function queryOne(Callable $fn): mixed
@@ -57,7 +60,7 @@ class Collection implements CollectionInterface
         return null;
     }
 
-    public function query(Callable $fn): null|static
+    public function query(Callable $fn): static
     {
         return new static(array_filter($this->collection, $fn, ARRAY_FILTER_USE_BOTH));
     }
@@ -93,7 +96,7 @@ class Collection implements CollectionInterface
         return $this->collection === [];
     }
 
-    public function unset(mixed $key): void
+    public function unset(int|string $key): void
     {
         unset($this->collection[$key]);
     }
@@ -113,9 +116,12 @@ class Collection implements CollectionInterface
         return $this->collection;
     }
 
-    public function jsonSerialize(): array
+    /**
+     * @throws JsonException
+     */
+    public function jsonSerialize(): string
     {
-        return $this->toArray();
+        return json_encode($this->toArray());
     }
 
     public function current(): mixed

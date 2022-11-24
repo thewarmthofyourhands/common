@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Eva\Common;
 
-
 trait DtoTrait
 {
     public function __construct(CollectionInterface|array $data)
     {
-        foreach ($data as $property => $value) {
+        array_walk($data, function (mixed $value, string $property): void {
             if (property_exists($this, $property)) {
                 $this->$property = $value;
             }
-        }
+        });
     }
 
     public function toArray(): array

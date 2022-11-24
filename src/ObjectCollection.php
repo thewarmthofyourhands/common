@@ -6,7 +6,7 @@ namespace Eva\Common;
 
 class ObjectCollection extends AbstractObjectCollection
 {
-    public function __construct(private readonly string $className, array $collection)
+    public function __construct(protected readonly string $className, array $collection)
     {
         parent::__construct($collection);
     }
@@ -26,8 +26,8 @@ class ObjectCollection extends AbstractObjectCollection
             }
 
             return $list;
-        } else {
-            return $this->collection;
         }
+
+        return $this->collection;
     }
 }
